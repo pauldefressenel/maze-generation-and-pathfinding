@@ -1,8 +1,8 @@
-'''Maze Generation using Depth First Search Algorithm'''
+'''Maze Generation with Depth First Search Algorithm'''
 
 # Import configs, classes, and libraries 
-from config import maze_width, n_rows, n_cols, white
-from cell import Cell
+from utils.config import maze_width, n_rows, n_cols, white
+from utils.cell import Cell
 import pygame
 import random
 import time
@@ -35,7 +35,7 @@ class MazeDFS:
                          False, False, False, 
                          [False, False, False, False]))
 
-    def return_cell_index(self, row, col):
+    def return_cell(self, row, col):
         '''Return Cell object at (row, col) or None if out of bounds'''
 
         if row < 0 or col < 0 or row > n_rows - 1 or col > n_cols - 1:
@@ -77,10 +77,10 @@ class MazeDFS:
         
         neighbours = []
         # Fetch all neighbouring cells
-        top_cell = self.return_cell_index(current_cell.row - 1, current_cell.col)
-        right_cell = self.return_cell_index(current_cell.row, current_cell.col + 1)
-        bottom_cell = self.return_cell_index(current_cell.row + 1, current_cell.col)
-        left_cell = self.return_cell_index(current_cell.row, current_cell.col - 1)
+        top_cell = self.return_cell(current_cell.row - 1, current_cell.col)
+        right_cell = self.return_cell(current_cell.row, current_cell.col + 1)
+        bottom_cell = self.return_cell(current_cell.row + 1, current_cell.col)
+        left_cell = self.return_cell(current_cell.row, current_cell.col - 1)
 
         # Append eligible neighbours
         if top_cell is not None and not top_cell.inMaze:
@@ -135,8 +135,8 @@ class MazeDFS:
         with open("maze_dfs.dat", "wb") as f:
             pickle.dump(self.cell_list, f)
 
+# Run the algorithm
 if __name__ == "__main__":
-    '''Run the algorithm'''
     
     start = time.time()
     maze = MazeDFS()

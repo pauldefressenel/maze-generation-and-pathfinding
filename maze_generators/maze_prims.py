@@ -1,8 +1,8 @@
-'''Maze generation using Prim's algorithm'''
+'''Maze Generation with Prim's Algorithm'''
 
 # Import configs, classes, and libraries 
-from config import maze_width, n_rows, n_cols, white
-from cell import Cell
+from utils.config import maze_width, n_rows, n_cols, white
+from utils.cell import Cell
 import pygame
 import random
 import time
@@ -35,7 +35,7 @@ class MazePrims:
                          False, False, False, 
                          [False, False, False, False]))
 
-    def return_cell_index(self, row, col):
+    def return_cell(self, row, col):
         '''Return Cell object at (row, col) or None if out of bounds'''
 
         if row < 0 or col < 0 or row > n_rows - 1 or col > n_cols - 1:
@@ -93,7 +93,7 @@ class MazePrims:
 
                 # Top wall
                 if direction == 0:
-                    dividing_cell = self.return_cell_index(cell.row - 1, cell.col)
+                    dividing_cell = self.return_cell(cell.row - 1, cell.col)
                     if dividing_cell is not None:
                         if cell.inMaze ^ dividing_cell.inMaze:
                             self.delete_walls(cell, dividing_cell)
@@ -107,7 +107,7 @@ class MazePrims:
 
                 # Right wall
                 if direction == 1:
-                    dividing_cell = self.return_cell_index(cell.row, cell.col + 1)
+                    dividing_cell = self.return_cell(cell.row, cell.col + 1)
                     if dividing_cell is not None:
                         if cell.inMaze ^ dividing_cell.inMaze:
                             self.delete_walls(cell, dividing_cell)
@@ -121,7 +121,7 @@ class MazePrims:
 
                 # Bottom wall
                 if direction == 2:
-                    dividing_cell = self.return_cell_index(cell.row + 1, cell.col)
+                    dividing_cell = self.return_cell(cell.row + 1, cell.col)
                     if dividing_cell is not None:
                         if cell.inMaze ^ dividing_cell.inMaze:
                             self.delete_walls(cell, dividing_cell)
@@ -135,7 +135,7 @@ class MazePrims:
 
                 # Left wall
                 if direction == 3:
-                    dividing_cell = self.return_cell_index(cell.row, cell.col - 1)
+                    dividing_cell = self.return_cell(cell.row, cell.col - 1)
                     if dividing_cell is not None:
                         if cell.inMaze ^ dividing_cell.inMaze:
                             self.delete_walls(cell, dividing_cell)
@@ -155,15 +155,16 @@ class MazePrims:
                 pygame.image.save(self.screen, f"./frame_{self.frame_count:05d}.png")
                 self.frame_count += 1
 
+            # Final save
             self.update_canvas()
             pygame.image.save(self.screen, "maze_prims.png")
             with open("maze_prims.dat", "wb") as f:
                 pickle.dump(self.cell_list, f)
             break
 
+# Run the algorithm
 if __name__ == "__main__":
-    '''Run the algorithm'''
-    
+
     start = time.time()
     maze = MazePrims()
     maze.run()

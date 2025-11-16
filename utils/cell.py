@@ -1,7 +1,7 @@
 '''Cell class representing each cell in the maze'''
 
 import pygame
-from config import W, outline, half_outline, light_blue, red, black
+from utils.config import W, outline, half_outline, light_blue, red, black
 
 class Cell:
     def __init__(self, row, col, lines=None, inPath=False,
