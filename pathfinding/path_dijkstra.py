@@ -135,37 +135,6 @@ class DijkstraPathfinder:
                     distances[neighbor] = new_dist
                     previous[neighbor] = current
 
-        # Reconstruct path
-        path, node = [], end
-        while node is not None:
-            row, col = node
-            path.append(self.cells[row][col])
-            node = previous[node]
-        path.reverse()
-
-        # Mark actual path
-        for cell in path:
-            cell.inPath = True
-
-        self.update_canvas()
-
-        # Prepare line points 
-        line_points = []
-        for cell in path:
-            x = cell.row * W + W // 2
-            y = cell.col * W + W // 2
-            line_points.append((x, y))
-
-
-        # Draw and save red polyline for solution
-        if len(line_points) > 1:
-            pygame.draw.lines(self.screen, red, False, line_points, 3)
-        pygame.display.update()
-        pygame.image.save(self.screen, "./dijkstra_solution.png")
-    
-        return path
-
-
 if __name__ == "__main__":
     '''Run Dijkstra Pathfinder'''
     
