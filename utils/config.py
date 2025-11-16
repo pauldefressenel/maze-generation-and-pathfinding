@@ -1,8 +1,8 @@
 '''Configuration file'''
 
 # Maze geometry (deal with square maze for simplicty)
-maze_width = maze_length = 100 # in pixels
-W = 5  # cell width
+maze_width = maze_length = 500 # in pixels
+W = 25  # cell width
 n_rows = maze_width // W
 n_cols = maze_length // W
 outline = W // 5 # wall thickness
